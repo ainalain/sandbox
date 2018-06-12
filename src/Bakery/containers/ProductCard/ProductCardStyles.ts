@@ -9,17 +9,8 @@ export const styles: createThemeFunction = (theme) => ({
   button: {
     margin: theme.spacing.unit,
   },
-  product: {},
-  info: {},
-  notification: {
-
-  },
 });
 
 export type StyleProps =
   | 'card'
-  | 'button'
-  | 'info'
-  | 'title'
-  | 'description'
-  | 'notification';
+  | 'button';

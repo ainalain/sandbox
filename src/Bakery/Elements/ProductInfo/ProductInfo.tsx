@@ -21,8 +21,8 @@ export const ProductInfoPure: React.SFC<Props> = (props) => {
 
   return (
     <section className={classes.root}>
-      <h1 className={classes.title}>{name}</h1>
-      <div className={classes.description}>{description}</div>
+      <h1>{name}</h1>
+      <div>{description}</div>
       <ProductDetails ingredients={ingredients}/>
     </section>
 

@@ -106,13 +106,11 @@ export class ProductCardPure extends React.Component<CardProps, State> {
                 onClick={this.onClick}
                 {...product}
               />
-            <div className={classes.info}>
-              <ProductInfo
-                name={product.name}
-                description={product.description}
-                ingredients={details ? details.ingredients : []}
-              />
-            </div>
+            <ProductInfo
+              name={product.name}
+              description={product.description}
+              ingredients={details ? details.ingredients : []}
+            />
             <Snackbar
               open={!!notificationMessage}
               message={notificationMessage}

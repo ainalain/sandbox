@@ -5,13 +5,7 @@ export const styles: createThemeFunction = (theme) => ({
     ...theme.mixins.flexColumn,
     paddingLeft: theme.spacing.unit * 3,
   },
-  title: {
-
-  },
-  description: {},
 });
 
 export type StyleProps =
-  | 'root'
-  | 'title'
-  | 'description';
+  | 'root';

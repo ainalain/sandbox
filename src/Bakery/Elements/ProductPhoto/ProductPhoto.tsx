@@ -1,5 +1,4 @@
-import { Button, Typography } from '@material-ui/core';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles, Button, Typography, WithStyles } from '@material-ui/core';
 import { Add, PhotoCamera } from '@material-ui/icons';
 import * as React from 'react';
 
