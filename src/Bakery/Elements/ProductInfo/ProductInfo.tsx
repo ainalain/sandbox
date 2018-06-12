@@ -20,11 +20,11 @@ export const ProductInfoPure: React.SFC<Props> = (props) => {
   } = props;
 
   return (
-    <div className={classes.root}>
-      <div className={classes.title}>{name}</div>
+    <section className={classes.root}>
+      <h1 className={classes.title}>{name}</h1>
       <div className={classes.description}>{description}</div>
       <ProductDetails ingredients={ingredients}/>
-    </div>
+    </section>
 
   );
 };

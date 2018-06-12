@@ -9,7 +9,6 @@ import * as React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { Provider } from 'react-redux';
 
-// import { CartActions } from '../Cart/Model/actions';
 import { CssGlobal } from '../globalStyles';
 import { muiTheme } from '../theme';
 
@@ -32,8 +31,6 @@ const AppRoot: React.SFC = () => (
     </MuiThemeProvider>
   </JssProvider>
 );
-
-// store.dispatch(CartActions.cleanCart());
 
 export class Root extends React.Component {
     render() {

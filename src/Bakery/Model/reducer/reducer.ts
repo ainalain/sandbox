@@ -28,6 +28,7 @@ const ingredients = [
     },
     {
       name: 'cocoa',
+      qty: 'a pinch'
     },
   ];
 

@@ -7,7 +7,7 @@ const styles: (theme: Theme) => {} = (theme: Theme) => ({
   '@global': {
     body: {
       fontFamily: 'Noto Sans, Roboto, sans-serif',
-      fontSize: 14,
+      fontSize: 16,
       fontWeightLight: 200,
       fontWeightRegular: 400,
       fontWeightMedium: 700,

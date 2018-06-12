@@ -17,7 +17,7 @@ export const muiTheme = createMuiTheme({
     'open-sans,-apple-system,system-ui,BlinkMacSystemFont,' +
     '"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif',
     fontWeightMedium,
-    htmlFontSize: 10
+    htmlFontSize: 10,
   },
   mixins: {
     flexColumn: {

@@ -5,23 +5,12 @@ export const styles: createThemeFunction = (theme) => ({
     ...theme.mixins.flexColumn,
     width: '100%',
     height: 'auto',
-    [theme.breakpoints.up('md')]: {
-      flexDirection: 'row',
-    },
   },
   button: {
     margin: theme.spacing.unit,
   },
-  product: {
-    [theme.breakpoints.up('md')]: {
-      flex: 3,
-    },
-  },
-  info: {
-    [theme.breakpoints.up('md')]: {
-      flex: 2,
-    },
-  },
+  product: {},
+  info: {},
   notification: {
 
   },

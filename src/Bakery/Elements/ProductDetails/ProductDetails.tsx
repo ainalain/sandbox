@@ -1,4 +1,4 @@
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles, Divider, WithStyles } from '@material-ui/core';
 import * as React from 'react';
 
 import { Ingredient } from '../../Model/store';
@@ -16,18 +16,22 @@ export const ProductDetailsPure: React.SFC<Props> = (props) => {
     classes, ingredients
   } = props;
 
+  const length = ingredients.length;
+
   return (
-    <div className={classes.root}>
-      {ingredients.map((item: Ingredient) =>
-        <div className={classes.item} key={item.name}>
-          <div className={classes.name}>
-            {item.name}
+    <div>
+      <ul className={classes.list}>
+        {ingredients.map((item: Ingredient, index: number) =>
+          <div className={classes.ingredient} key={item.name}>
+            <div className={classes.item}>
+                {item.name},&nbsp;{item.qty}
+            </div>
+            {index < length - 1
+              ? <Divider classes={{ root: classes.divider }}/>
+              : null}
           </div>
-          <div className={classes.qty}>
-            {item.qty}
-          </div>
-        </div>
-      )}
+        )}
+      </ul>
     </div>
   );
 };
