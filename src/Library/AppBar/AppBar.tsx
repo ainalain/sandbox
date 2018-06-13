@@ -11,7 +11,8 @@ import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { compose, Dispatch } from 'redux';
 
-import { getCartError, getCartUnitsAmount } from '../../Cart/Model/selectors';
+import { getCartErrors, getCartUnitsAmount } from '../../Cart/Model/selectors';
+import { CartErrors } from '../../Cart/Model/store';
 import { Model } from '../../Main/Model';
 
 import { styles, StyleProps } from './AppBarStyles';
@@ -28,7 +29,7 @@ interface OwnProps extends RouteComponentProps<RouterParams> {
 
 interface ModelProps {
   unitsAmount: number;
-  cartError?: Error;
+  cartErrors?: CartErrors;
 }
 
 interface DispatchProps {
@@ -100,7 +101,7 @@ export class AppBarPure extends React.Component<Props> {
 
 const mapStateToProps = (state: Model.Root, props: OwnProps): ModelProps => ({
   unitsAmount: getCartUnitsAmount(state),
-  cartError: getCartError(state),
+  cartErrors: getCartErrors(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({

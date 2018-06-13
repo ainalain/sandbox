@@ -3,6 +3,8 @@ export interface RemovePayload {
   removeProduct?: boolean;
 
 }
+
+/* an interface of a product entity that had been added to a shopping cart */
 export interface ProductInCart {
   id: string;
   amount: number;
@@ -10,14 +12,26 @@ export interface ProductInCart {
   label?: string;
 }
 
-export type ProductInCartObject = Record<string, ProductInCart>;
+export enum ErrorsEnum {
+  NetworkError = 'NetworkError',
+  ServerError = 'ServerError',
+  FormValidationError = 'FormValidationError',
+  UnknownError = 'UnknownError'
+}
 
+export type CartErrors = Partial<Record<ErrorsEnum, string>>;
+
+/* a model that is responsible for the current state
+ * of shopping cart business logic
+ */
 export class CartModel {
   products: Record<string, ProductInCart> = {};
-  error?: Error = undefined;
+  errors?: CartErrors;
 }
+
+export type ProductInCartObject = Record<string, ProductInCart>;
 
 export const DefaultCartModel: CartModel = {
   products: {},
-  error: undefined,
+  errors: undefined,
 };

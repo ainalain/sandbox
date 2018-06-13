@@ -1,6 +1,6 @@
 import { Model } from '../../Main/Model';
 
-import { ProductInCartObject } from './store';
+import { CartErrors, ProductInCartObject } from './store';
 
 export const getCartUnitsAmount = (state: Model.Root): number => {
   if (state
@@ -26,11 +26,11 @@ export const getCartProducts = (state: Model.Root): ProductInCartObject | undefi
   return undefined;
 };
 
-export const getCartError = (state: Model.Root): Error | undefined => {
+export const getCartErrors = (state: Model.Root): CartErrors | undefined => {
   if (state
     && state.cart
-    && state.cart.error) {
-    return state.cart.error;
+    && state.cart.errors) {
+    return state.cart.errors;
   }
   return undefined;
 };

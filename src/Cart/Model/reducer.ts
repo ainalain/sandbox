@@ -1,9 +1,12 @@
 import { CartActions } from './actions';
 import {
+  CartErrors,
   CartModel, DefaultCartModel,
   ProductInCart, ProductInCartObject,
   RemovePayload,
 } from './store';
+
+export const defaultErrorMessage = 'Something went wrong. Please try again later.';
 
 export const addProductToCartHelper = (state: CartModel, payload: ProductInCart) => {
   const newState = { ...state.products };
@@ -53,7 +56,7 @@ export const cartReducer = (
   state: CartModel = DefaultCartModel,
   action: CartActions.ActionTypes): CartModel => {
 
-  let error: Error;
+  let errors: CartErrors | undefined = state.errors;
   let newState: ProductInCartObject;
 
   switch (action.type) {
@@ -64,11 +67,11 @@ export const cartReducer = (
       newState = removeProductFromCartHelper(state, action.payload, action.removeProduct);
       return { ...state, products: newState };
     case CartActions.TypeKeys.ADD_PRODUCT_TO_CART_FAILURE:
-      error = action.payload;
-      return { ...state, error };
+      errors = { ...state.errors, [action.payload.name]: action.payload.message };
+      return { ...state, errors };
     case CartActions.TypeKeys.REMOVE_POSITION_FROM_CART_FAILURE:
-      error = action.payload;
-      return { ...state, error };
+      errors = { ...state.errors, [action.payload.name]: action.payload.message };
+      return { ...state, errors };
     default:
       return state;
   }

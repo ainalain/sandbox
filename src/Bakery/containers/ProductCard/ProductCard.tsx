@@ -5,8 +5,9 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { compose, Dispatch } from 'redux';
 
 import { CartActions } from '../../../Cart/Model/actions';
-import { getCartProducts } from '../../../Cart/Model/selectors';
-import { ProductInCart } from '../../../Cart/Model/store';
+import { defaultErrorMessage } from '../../../Cart/Model/reducer';
+import { getCartErrors, getCartProducts } from '../../../Cart/Model/selectors';
+import { CartErrors, ProductInCart } from '../../../Cart/Model/store';
 import { Snackbar } from '../../../Library/Snackbar/Snackbar';
 import { Model } from '../../../Main/Model';
 import { isEqualWithDiff } from '../../../helpers/deepEqual';
@@ -18,12 +19,13 @@ import { Details, Product } from '../../Model/store';
 
 import { styles, StyleProps } from './ProductCardStyles';
 
-interface Props extends RouteComponentProps<any> {}
+interface OwnProps extends RouteComponentProps<any> {}
 
 type ModelProps = Partial<{
     product: Product;
     cartContent: Record<string, ProductInCart>;
     details: Details;
+    errors: CartErrors;
 }>;
 
 interface DispatchProps {
@@ -32,17 +34,21 @@ interface DispatchProps {
   removeFromCart: (id: string, fullProduct?: boolean) => void;
 }
 
-type CardProps = ModelProps & DispatchProps & Props & WithStyles<StyleProps>;
+type Props = ModelProps & DispatchProps & OwnProps & WithStyles<StyleProps>;
 
-interface State {
+interface ProductCardState {
   notificationMessage?: string;
   afterAdd: boolean;
+  errorState?: boolean;
 }
 
-export class ProductCardPure extends React.Component<CardProps, State> {
+type State = Readonly<ProductCardState>;
+
+export class ProductCardPure extends React.Component<Props, State> {
   readonly state: State = {
     notificationMessage: undefined,
     afterAdd: false,
+    errorState: false,
   };
 
   componentWillMount() {
@@ -53,11 +59,22 @@ export class ProductCardPure extends React.Component<CardProps, State> {
     }
   }
 
-  componentWillReceiveProps(nextProps: CardProps) {
-    const { cartContent, match: { params } } = this.props;
+  componentWillReceiveProps(nextProps: Props) {
+    const {cartContent, match: {params}, errors} = this.props;
     const diff = isEqualWithDiff(cartContent, nextProps.cartContent);
 
-    if (Array.isArray(diff) && diff.length) {
+    if (nextProps.errors && Object.values(nextProps.errors).length) {
+      this.setState({
+        notificationMessage: Object.values(nextProps.errors)[0],
+        afterAdd: false,
+        errorState: true,
+      });
+
+    } else if (nextProps.errors && !errors) {
+
+      this.setState({notificationMessage: defaultErrorMessage, afterAdd: false});
+
+    } else if (Array.isArray(diff) && diff.length) {
       const obj = diff.find((item: any) => item[params.id]);
       const { amount, label } = obj[params.id];
 
@@ -97,7 +114,7 @@ export class ProductCardPure extends React.Component<CardProps, State> {
 
   render() {
     const { product, details, classes } = this.props;
-    const { notificationMessage, afterAdd } = this.state;
+    const { notificationMessage, afterAdd, errorState } = this.state;
 
     return product
       ? (
@@ -117,6 +134,7 @@ export class ProductCardPure extends React.Component<CardProps, State> {
               hasAction={afterAdd}
               hasClose={true}
               actionFn={this.removeProductFromCart}
+              autoDuration={errorState ? 3000 : 1000}
             />
           </section>
         )
@@ -128,6 +146,7 @@ const mapStateToProps = (state: Model.Root, props: Props): ModelProps => ({
   product: productByIdSelector(state, props.match.params.id),
   cartContent: getCartProducts(state),
   details: getDetails(state),
+  errors: getCartErrors(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
