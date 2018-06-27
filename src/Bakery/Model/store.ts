@@ -7,10 +7,9 @@ export interface Product {
       authorLink: string;
     }
 
-  type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-  export type ProductPhotoProps = Omit<Product, 'name' | 'description'>;
-
+export type ProductPhotoProps = Omit<Product, 'name' | 'description'>;
 
 export const DefaultProductModel: Product = {
   id: '',
