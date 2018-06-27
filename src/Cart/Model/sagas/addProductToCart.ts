@@ -14,7 +14,10 @@ export function* addProductToCart(id: string) {
         payload: result,
       });
     } else {
-      throw ({ name: ErrorsEnum.NetworkError, message: 'You are offline. Plesa, try again later.' });
+      throw ({
+        name: ErrorsEnum.NetworkError,
+        message: 'You are offline. Please, try again later.',
+      });
     }
   } catch (err) {
     yield put({

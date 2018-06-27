@@ -12,6 +12,29 @@ export interface ProductInCart {
   label?: string;
 }
 
+/* TODO: these all custom errors are created as examples of using enum in Record type
+class UnknownError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = ErrorsEnum.UnknownError;
+  }
+}
+
+class ServerError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = ErrorsEnum.ServerError;
+  }
+}
+
+class FormValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = ErrorsEnum.FormValidationError;
+  }
+}
+*/
+
 export enum ErrorsEnum {
   NetworkError = 'NetworkError',
   ServerError = 'ServerError',
@@ -21,9 +44,6 @@ export enum ErrorsEnum {
 
 export type CartErrors = Partial<Record<ErrorsEnum, string>>;
 
-/* a model that is responsible for the current state
- * of shopping cart business logic
- */
 export class CartModel {
   products: Record<string, ProductInCart> = {};
   errors?: CartErrors;
