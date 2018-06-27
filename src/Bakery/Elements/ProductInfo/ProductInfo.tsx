@@ -6,11 +6,11 @@ import { ProductDetails } from '../ProductDetails/ProductDetails';
 
 import { styles, StyleProps } from './ProductInfoStyles';
 
-interface OwnProps {
+type OwnProps = Required<{
   name: string;
   description: string;
   ingredients: Array<Ingredient>;
-}
+}>;
 
 type Props = OwnProps & WithStyles<StyleProps>;
 

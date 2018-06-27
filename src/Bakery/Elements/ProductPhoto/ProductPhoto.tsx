@@ -3,11 +3,9 @@ import { Add, PhotoCamera } from '@material-ui/icons';
 import * as React from 'react';
 
 import { ImagePure } from '../../../Library/Image/Image';
-import { Product } from '../../Model/store';
+import { ProductPhotoProps } from '../../Model/store';
 
 import { styles, StyleProps } from './ProductPhotoStyles';
-
-export type ProductPhotoProps = Pick<Product, 'id' | 'author' | 'authorLink' | 'price'>;
 
 export interface OwnProps {
   onClick: () => void;
