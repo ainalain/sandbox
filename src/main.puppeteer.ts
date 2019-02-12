@@ -18,12 +18,12 @@ import { Browser } from 'puppeteer';
 
 import * as config from '../config/puppeteer/puppeteer.config.js';
 
-import { login } from './IntegrationTests/testUtils/authentication.puppeteer.helper';
+import { login } from './E2eTests/testUtils/authentication.puppeteer.helper';
 import {
   credentials,
   Credentials,
   UserTypes,
-} from './IntegrationTests/testUtils/puppeteer.data';
+} from './E2eTests/testUtils/puppeteer.data';
 
 const { options, sizeOptions, APP_URL } = config;
 
@@ -131,7 +131,7 @@ export const createMochaInstance = (roleFolder: string) => {
     useColors: true
   });
 
-  const testDir = path.join(__dirname, `./IntegrationTests/${roleFolder}`);
+  const testDir = path.join(__dirname, `./E2eTests/${roleFolder}`);
 
   const files = traverseFiles(testDir);
 
