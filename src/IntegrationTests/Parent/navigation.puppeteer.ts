@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { Page } from 'puppeteer';
 
 import * as config from '../../../config/puppeteer/puppeteer.config';
+import { UserTypes } from '../testUtils/puppeteer.data';
 
 /*
  * This is an example and boilerplate for your automated tests on Puppeteer and Mocha.
@@ -11,7 +12,7 @@ import * as config from '../../../config/puppeteer/puppeteer.config';
 describe('Parent SideMenu navigation', () => {
   let page: Page;
   before(async () => {
-    const browser = (global as any).BROWSERS.parentBrowser;
+    const browser = (global as any).BROWSERS[UserTypes.Parent];
 
     page = await browser.newPage();
 

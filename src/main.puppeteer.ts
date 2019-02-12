@@ -21,7 +21,8 @@ import * as config from '../config/puppeteer/puppeteer.config.js';
 import { login } from './IntegrationTests/testUtils/authentication.puppeteer.helper';
 import {
   credentials,
-  Credentials
+  Credentials,
+  UserTypes,
 } from './IntegrationTests/testUtils/puppeteer.data';
 
 const { options, sizeOptions, APP_URL } = config;
@@ -192,9 +193,9 @@ export const makeTestSuitePromise = ({
 };
 
 export interface BrowserMap {
-  doctorBrowser?: Browser;
-  parentBrowser?: Browser;
-  adminBrowser?: Browser;
+  [UserTypes.Doctor]?: Browser;
+  [UserTypes.Parent]?: Browser;
+  [UserTypes.Admin]?: Browser;
 }
 
 /*
@@ -205,46 +206,41 @@ export interface BrowserMap {
 const main = async () => {
   let mochaInstances: Record<string, Mocha> = {};
 
-  ['Doctor', 'Parent', 'Admin'].forEach((user: string) => {
-    const instance = createMochaInstance(user);
-    mochaInstances[user] = instance;
-  });
+  for (const user in UserTypes) {
+    if (UserTypes.hasOwnProperty(user)) {
+      const instance = createMochaInstance(user);
+      mochaInstances[user] = (instance);
+    }
+  }
 
   const browsers: BrowserMap = {
-    doctorBrowser: undefined,
-    parentBrowser: undefined,
-    adminBrowser: undefined
+    [UserTypes.Doctor]: undefined,
+    [UserTypes.Parent]: undefined,
+    [UserTypes.Admin]: undefined,
   };
 
   await createChromePool();
   const doctorBrowser = await (global as any).chromepool.acquire(0);
-  browsers.doctorBrowser = doctorBrowser;
+  browsers[UserTypes.Doctor] = doctorBrowser;
   const parentBrowser = await (global as any).chromepool.acquire(0);
-  browsers.parentBrowser = parentBrowser;
+  browsers[UserTypes.Parent] = parentBrowser;
   const adminBrowser = await (global as any).chromepool.acquire(0);
-  browsers.adminBrowser = adminBrowser;
+  browsers[UserTypes.Admin] = adminBrowser;
 
   (global as any).BROWSERS = browsers;
 
-  const doctorPromise = makeTestSuitePromise({
-    browser: doctorBrowser,
-    user: 'Doctor',
-    mocha: mochaInstances['Doctor']
-  });
+  let promises: Promise<any>[] = [];
+  for (const user in UserTypes) {
+    if (UserTypes.hasOwnProperty(user)) {
+      promises.push(makeTestSuitePromise({
+        user,
+        browser: browsers[user],
+        mocha: mochaInstances[user],
+      }));
+    }
+  }
 
-  const parentPromise = makeTestSuitePromise({
-    browser: parentBrowser,
-    user: 'Parent',
-    mocha: mochaInstances['Parent']
-  });
-
-  const adminPromise = makeTestSuitePromise({
-    browser: adminBrowser,
-    user: 'Admin',
-    mocha: mochaInstances['Admin']
-  });
-
-  return Promise.all([doctorPromise, parentPromise, adminPromise]);
+  return Promise.all(promises);
 };
 
 main()

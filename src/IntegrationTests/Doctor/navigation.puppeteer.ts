@@ -2,11 +2,12 @@ import { expect } from 'chai';
 import { Page } from 'puppeteer';
 
 import * as config from '../../../config/puppeteer/puppeteer.config.js';
+import { UserTypes } from '../testUtils/puppeteer.data';
 
 describe('Doctor AppBar navigation', () => {
   let page: Page;
   before(async () => {
-    const browser = (global as any).BROWSERS.doctorBrowser;
+    const browser = (global as any).BROWSERS[UserTypes.Doctor];
 
     page = await browser.newPage();
 
