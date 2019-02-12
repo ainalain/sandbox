@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --progress --mode development --inline --hot",
+    "puppeteer": "ts-node -O '{\"module\":\"commonjs\"}' ./src/main.puppeteer.ts",
+    "puppeteer:windows": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\" ./src/main.puppeteer.ts",
+    "puppeteer:stage": "NODE_ENV=stage ts-node -O '{\"module\":\"commonjs\"}' ./src/main.puppeteer.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Elena Sufieva",
