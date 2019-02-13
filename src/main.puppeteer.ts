@@ -40,10 +40,10 @@ const chalkInfo = chalk.bold.magenta;
  * Code taken from here:
  * https://github.com/GoogleChrome/puppeteer/issues/1873#issuecomment-446787045
  */
-const createChromePool = async () => {
+const createChromePool = () => {
   const factory = {
-    create: () => {
-      return puppeteer.launch(options);
+    create: async () => {
+      return await puppeteer.launch(options);
     },
     destroy: async (client: Browser) => {
       await client.close();
@@ -204,12 +204,14 @@ export interface BrowserMap {
  * 'Doctor', 'Parent', 'Admin'
  */
 const main = async () => {
+  createChromePool();
+
   let mochaInstances: Record<string, Mocha> = {};
 
   for (const user in UserTypes) {
     if (UserTypes.hasOwnProperty(user)) {
       const instance = createMochaInstance(user);
-      mochaInstances[user] = (instance);
+      mochaInstances[user] = instance;
     }
   }
 
@@ -219,13 +221,9 @@ const main = async () => {
     [UserTypes.Admin]: undefined,
   };
 
-  await createChromePool();
-  const doctorBrowser = await (global as any).chromepool.acquire(0);
-  browsers[UserTypes.Doctor] = doctorBrowser;
-  const parentBrowser = await (global as any).chromepool.acquire(0);
-  browsers[UserTypes.Parent] = parentBrowser;
-  const adminBrowser = await (global as any).chromepool.acquire(0);
-  browsers[UserTypes.Admin] = adminBrowser;
+  browsers[UserTypes.Doctor] = await (global as any).chromepool.acquire(0);
+  browsers[UserTypes.Parent] = await (global as any).chromepool.acquire(0);
+  browsers[UserTypes.Admin] = await (global as any).chromepool.acquire(0);
 
   (global as any).BROWSERS = browsers;
 
