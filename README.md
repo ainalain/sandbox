@@ -26,7 +26,7 @@ There are 3 scripts for running end-to-end tests in the `package.json` file:
 
 There is no full example of a working app, this branch is used as a code source for my article. 
 
-The main interest represents `main.puppeteer.ts` file: it's a setup of end-to-end tests suites where 3 browser instances are running scripts for 3 different users. If you want to know more about my motivation and this setup details, you can read this article.
+The main interest represents `main.puppeteer.ts` file: it's a setup of end-to-end tests suites where 3 browser instances are running scripts for 3 different users. If you want to know more about my motivation and this setup details, you can read [this article.](https://medium.com/@elenasufieva/set-up-end-to-end-tests-with-puppeteer-and-mocha-4bb0c24b563a)
 
 Please note that mostly this project works only in a development mode. This is not a production ready project. However, I will be glad to know that it helped you in some way.
 
